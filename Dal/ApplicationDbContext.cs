@@ -16,5 +16,6 @@ namespace E_Com_Monolithic.Dal
         public DbSet<ProductImage> productImages { get; set; }
         public DbSet<Inventory> inventories { get; set; }
         public DbSet<Cart> carts { get; set; }
+        public DbSet<CartItem> cartItems { get; set; }
     }
 }
