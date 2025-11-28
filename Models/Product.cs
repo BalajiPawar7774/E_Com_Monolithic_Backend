@@ -25,9 +25,14 @@ namespace E_Com_Monolithic.Models
         [StringLength(100)]
         public string? Brand { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
 
         public string Status { get; set; } = "Available";
+
+        public Product()
+        {
+            CreatedAt = DateTime.Now;
+        }
 
 
 
