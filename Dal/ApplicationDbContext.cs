@@ -22,5 +22,6 @@ namespace E_Com_Monolithic.Dal
         public DbSet<Payment> payments { get; set; }
         public DbSet<Shipment> shipments { get; set; }
         public DbSet<Review> reviews { get; set; }
+        public DbSet<ProductViews> productViews { get; set; }
     }
 }
