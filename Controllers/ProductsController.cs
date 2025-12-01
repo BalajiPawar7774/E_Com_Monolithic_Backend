@@ -113,6 +113,7 @@ namespace E_Com_Monolithic.Controllers
 
         [HttpGet("searchbyname")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SearchProductsByName([FromQuery] string name)
         {
             var products = await _productService.SearchProductBYName(name);
@@ -125,6 +126,7 @@ namespace E_Com_Monolithic.Controllers
 
         [HttpGet("searchProductByCategoryName")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SearchProductsByCategoryName([FromQuery] string categoryName)
         {
             var products = await _productService.SearchProductBYCatogoryName(categoryName);
@@ -137,6 +139,7 @@ namespace E_Com_Monolithic.Controllers
 
         [HttpGet("searchProductByCategoryId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SearchProductsByCategoryId([FromQuery] int categoryId)
         {
             var products = await _productService.SearchProductBYCategoryId(categoryId);
@@ -149,6 +152,7 @@ namespace E_Com_Monolithic.Controllers
 
         [HttpPost("searchUniversal")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SearchProductsUniversal([FromBody] string  searchTerm)
         {
             var dto = new ProductSearchRequestDto

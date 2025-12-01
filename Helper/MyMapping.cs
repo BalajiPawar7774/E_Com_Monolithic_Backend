@@ -10,6 +10,9 @@ namespace E_Com_Monolithic.Helper
         {
             CreateMap<ProductDto, Product>();
             CreateMap<Product, ProductDto>();
+
+            CreateMap<CategoryDto, Category>();
+            CreateMap<Category, CategoryDto>();
         }
     }
 }
