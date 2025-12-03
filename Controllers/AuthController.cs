@@ -35,11 +35,13 @@ namespace E_Com_Monolithic.Controllers
             dto.PasswordHash = passwordHash;
             var user = _mapper.Map<Models.User>(dto);
             var registeredUser = await _authRepository.RegisterUser(user);
-            if(registeredUser == null)
+
+            if (registeredUser == null)
             {
-                return BadRequest("User registration failed!!.");
+                return BadRequest(new { success = false, message = "User registration failed!!." });
             }
-            return Ok("User Registration Successfull !!");
+
+            return Ok(new { success = true, message = "User Registration Successful !!" });
         }
 
         [HttpPost("login")]
