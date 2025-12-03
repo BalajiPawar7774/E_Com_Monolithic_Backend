@@ -22,6 +22,8 @@ namespace E_Com_Monolithic.Models
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
 
+        public string ImageUrl { get; set; } = string.Empty;
+
         [StringLength(100)]
         public string? Brand { get; set; }
 

@@ -25,6 +25,8 @@ namespace E_Com_Monolithic.Dtos
         [Range(0.01, 1000000, ErrorMessage = "Price must be between 0.01 and 1,000,000")]
         public decimal Price { get; set; }
 
+        public string ImageUrl { get; set; } = string.Empty;
+
         [StringLength(100, ErrorMessage = "Brand name cannot exceed 100 characters")]
         public string? Brand { get; set; }
     }

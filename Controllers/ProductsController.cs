@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using E_Com_Monolithic.Dtos;
+using E_Com_Monolithic.Helper;
 using E_Com_Monolithic.Models;
 using E_Com_Monolithic.Repositories;
 using E_Com_Monolithic.Services;
@@ -127,14 +128,29 @@ namespace E_Com_Monolithic.Controllers
         [HttpGet("searchProductByCategoryName")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> SearchProductsByCategoryName([FromQuery] string categoryName)
+        public async Task<IActionResult> SearchProductsByCategoryName([FromQuery] string categoryName, int page = 1, int pageSize = 10)
         {
             var products = await _productService.SearchProductBYCatogoryName(categoryName);
             if (products == null || !products.Any())
             {
                 return NotFound($"No products found with the category containing '{categoryName}'");
             }
-            return Ok(products);
+            var totalCount = products.Count;
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            var pagedProducts = products
+                                  .Skip((page - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToList();
+
+            var vm = new ProductListPaginationModel
+            {
+                Products = pagedProducts,
+                PageIndex = page,
+                TotalPages = totalPages
+            };
+
+
+            return Ok(vm);
         }
 
         [HttpGet("searchProductByCategoryId")]
@@ -150,10 +166,10 @@ namespace E_Com_Monolithic.Controllers
             return Ok(products);
         }
 
-        [HttpPost("searchUniversal")]
+        [HttpGet("searchUniversal")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> SearchProductsUniversal([FromBody] string  searchTerm)
+        public async Task<IActionResult> SearchProductsUniversal( string  searchTerm, int page = 1, int pageSize = 10)
         {
             var dto = new ProductSearchRequestDto
             {
@@ -164,7 +180,20 @@ namespace E_Com_Monolithic.Controllers
             {
                 return NotFound("No products found matching the search criteria");
             }
-            return Ok(products);
+            var totalCount = products.Count;
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            var pagedProducts = products
+                                  .Skip((page - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToList();
+
+            var vm = new ProductListPaginationModel
+            {
+                Products = pagedProducts,
+                PageIndex = page,
+                TotalPages = totalPages
+            };
+            return Ok(vm);
         }
     }
 }

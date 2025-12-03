@@ -14,7 +14,18 @@ builder.Services.AddDbContext<ApplicationDbContext>( options =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient<ICommonRepository<Product>, CommonRepository<Product>>();
+builder.Services.AddTransient<ICommonRepository<Category>, CommonRepository<Category>>();
 builder.Services.AddTransient<ProductService>();
+
+builder.Services.AddCors(builder =>
+{
+    builder.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
