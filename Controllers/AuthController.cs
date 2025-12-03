@@ -38,10 +38,10 @@ namespace E_Com_Monolithic.Controllers
 
             if (registeredUser == null)
             {
-                return BadRequest(new { success = false, message = "User registration failed!!." });
+                return BadRequest(new { success = false, message = "User registration failed!!."});
             }
 
-            return Ok(new { success = true, message = "User Registration Successful !!" });
+            return Ok(new { success = true, message = "User Registration Successful !!", email = registeredUser.Email });
         }
 
         [HttpPost("login")]
@@ -58,7 +58,7 @@ namespace E_Com_Monolithic.Controllers
             {
                 return BadRequest("Invalid Email or Password");
             }
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.password, user.PasswordHash);
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
             if(!isPasswordValid)
             {
                 return BadRequest("Invalid Email or Password");
