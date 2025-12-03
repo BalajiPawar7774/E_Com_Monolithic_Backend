@@ -1,3 +1,5 @@
+using E_Com_Monolithic.Authentication.AuthRepositories;
+using E_Com_Monolithic.Authentication.Jwt;
 using E_Com_Monolithic.Dal;
 using E_Com_Monolithic.Models;
 using E_Com_Monolithic.Repositories;
@@ -15,6 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>( options =>
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient<ICommonRepository<Product>, CommonRepository<Product>>();
 builder.Services.AddTransient<ICommonRepository<Category>, CommonRepository<Category>>();
+builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+builder.Services.AddTransient<ITokenManager, TokenManager>();
 builder.Services.AddTransient<ProductService>();
 
 builder.Services.AddCors(builder =>

@@ -13,6 +13,9 @@ namespace E_Com_Monolithic.Helper
 
             CreateMap<CategoryDto, Category>();
             CreateMap<Category, CategoryDto>();
+
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
     }
 }
