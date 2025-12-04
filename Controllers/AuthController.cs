@@ -64,13 +64,43 @@ namespace E_Com_Monolithic.Controllers
                 return BadRequest("Invalid Email or Password");
             }
 
+            //token generation
+            var token = await _tokenManager.CreateTokenAsync(user);
+
+            //append token to cookie
+            Response.Cookies.Append("auth_token", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true, // ← MUST BE FALSE for HTTP
+                SameSite = SameSiteMode.None, // ← MUST BE None for cross-origin
+                Expires = DateTime.UtcNow.AddHours(1),
+                Path = "/"
+            });
+
             var logedUserResponse = new LoggedInUserResponse
             {
                 IsAuthenticated = true,
                 Role = user.Role,
-                Token = _tokenManager.CreateTokenAsync(user).Result // Token generation logic can be added here
+                UserId = user.UserId
             };
             return Ok(logedUserResponse);
+        }
+
+        [HttpGet("logout")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Logout()
+        {
+            // Clear the auth cookie
+            Response.Cookies.Append("auth_token", "", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.UtcNow.AddDays(-1), // Set to past date to delete
+                Path = "/"
+            });
+
+            return Ok(new { message = "Logged out successfully" });
         }
     }
 }

@@ -4,6 +4,7 @@ using E_Com_Monolithic.Helper;
 using E_Com_Monolithic.Models;
 using E_Com_Monolithic.Repositories;
 using E_Com_Monolithic.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -166,6 +167,7 @@ namespace E_Com_Monolithic.Controllers
             return Ok(products);
         }
 
+        [Authorize]
         [HttpGet("searchUniversal")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
